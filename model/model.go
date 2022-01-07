@@ -5,6 +5,35 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+
+
+type User struct {
+	Id    bson.ObjectId 	`json:"id,omitempty" bson:"_id,omitempty"`
+	FirstName string        `json:"firstName" bson:"firstName"`  			//require
+	LastName string        	`json:"lastName" bson:"lastname"`				//require
+	FullName string        	`json:"fullName" bson:"fullName"`				
+	Email string        	`json:"email" bson:"email"`						//require && unique
+	NarrEmail string        `json:"narrEmail" bson:"narrEmail"`
+	EmailVerified bool		`json:"emailVerified" bson:"emailVerified"`
+	Password string        	`json:"password" bson:"password"`				//require
+	UserRole string			`json:"userRole" bson:"userRole"`
+	DOB string				`json:"DOB" bson:"DOB"`							//require
+	Phone string        	`json:"phone" bson:"phone"`						//require
+	Address string        	`json:"address" bson:"address"`					//require
+	Intitution Institution	`json:"institution" bson:"institution"`	
+	Avatar string			`json:"avatar" bson:"avatar"`
+	Bvn string				`json:"bvn" bson:"bvn"`
+	Bank Bank				`json:"bank" bson:"bank"`
+	Blockchain Blockchain	`json:"blockchain" bson:"blockchain"`
+	TotalUploads string 	`json:"totalUploads" bson:"totalUploads"`
+	Specialisation []string	`json:"specialization" bson:"ownership"`
+	Interest []string		`json:"intrest" bson:"intrest"`
+	LastLoggedIn time.Time
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Status string			`json:"status" bson:"status"`
+
+}
 type Bank struct{
 	BankName string          	`json:"bankName" bson:"bankName"`
 	AcccountName string 		`json:"accountName" bson:"accountName"`
@@ -27,31 +56,4 @@ type Blockchain struct{
 	PublicKey string			`json:"publicKey" bson:"publicKey"`
 	Token string				`json:"token" bson:"token"`
 	GasBalance string			`json:"gasBalance" bson:"gasBalance"`
-}
-
-type User struct {
-	Id    bson.ObjectId 	`json:"id,omitempty" bson:"_id,omitempty"`
-	FirstName string        `json:"firstName" bson:"firstName"`  			//require
-	LastName string        	`json:"lastName" bson:"lastname"`				//require
-	FullName string        	`json:"fullName" bson:"fullName"`				
-	Email string        	`json:"email" bson:"email"`						//require && unique
-	NarrEmail string        `json:"narrEmail" bson:"narrEmail"`
-	EmailVerified bool		`json:"emailVerified" bson:"emailVerified"`
-	Password string        	`json:"password" bson:"password"`				//require
-	UserRole string			`json:"userRole" bson:"userRole"`
-	DOB string				`json:"DOB" bson:"DOB"`							//require
-	Phone string        	`json:"phone" bson:"phone"`						//require
-	Address string        	`json:"address" bson:"address"`					//require
-	Intitution Institution
-	Avatar string			`json:"avatar" bson:"avatar"`
-	Bvn string				`json:"bvn" bson:"bvn"`
-	Bank Bank
-	TotalUploads string 	`json:"totalUploads" bson:"totalUploads"`
-	Specialisation []string	`json:"specialization" bson:"ownership"`
-	Interest []string		`json:"intrest" bson:"intrest"`
-	LastLoggedIn time.Time
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Status string			`json:"status" bson:"status"`
-
 }

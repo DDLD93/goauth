@@ -2,7 +2,6 @@ package routes
 
 import (
 	"errors"
-	"fmt"
 
 	controller "github.com/ddld93/goauth/controllers"
 	"github.com/ddld93/goauth/model"
@@ -25,23 +24,30 @@ func (ur *UserRoute) Login(email, password string) (string,error){
 		return "", errors.New("invalid password")
 	}
 	token,err:= tokenMaker.CreateToken(user.Email,user.UserRole,100)
-	
+	if err != nil {
+		return "", err
+	}
 	return token,nil
 }
 
 func (ur *UserRoute) Register(user *model.User) (string,error){
+	userValidated,err1:= utilities.UserModelValidate(user)
+	if err1 != nil {
+		return "", err1
+	}
 	// hashing password using Bcrypt
-	hash, err := utilities.HashPassword(user.Password)
-	if err != nil {
+	hash, err2 := utilities.HashPassword(userValidated.Password)
+	if err2 != nil {
 		return "", errors.New(" error harshing password")
 	}
-	user.Password = hash
-	resp,err := ur.UserCtrl.CreateUser(user)
-	if err != nil {
-		return "", err
+	userValidated.Password = hash
+	resp,err3 := ur.UserCtrl.CreateUser(userValidated)
+	if err3 != nil {
+		return "", err3
 	}
 	return resp,nil
 }
+
 func (ur *UserRoute) Activate(token,email,status string) (string,error){
 	claims,err := tokenMaker.VerifyToken(token)
 	if err != nil {
@@ -64,20 +70,20 @@ func (ur *UserRoute) Activate(token,email,status string) (string,error){
 	if err2 != nil {
 		return "", err2
 	}
-	return fmt.Sprintf("user activated succesifully"), nil
+	return "user activated succesifully", nil
 
 }
-func (ur *UserRoute) ResetPassword(email string) (error){
-	user, err := ur.UserCtrl.GetUser(email)
-	if err != nil {
-		return err
-	}
- // send instructions to user.Email email 
- // check for errors
-fmt.Println("instruction email sent to", user.Email)
- return nil
+// func (ur *UserRoute) ResetPassword(email string) (error){
+// 	user, err := ur.UserCtrl.GetUser(email)
+// 	if err != nil {
+// 		return err
+// 	}
+//  // send instructions to user.Email email 
+//  // check for errors
+// fmt.Println("instruction email sent to", user.Email)
+//  return nil
 
-}
+// }
 func (ur *UserRoute) ChangePassword(token string) error{
 	claims,err := tokenMaker.VerifyToken(token)
 	if err != nil {

@@ -6,7 +6,7 @@ import (
 	"github.com/ddld93/goauth/model"
 )
 
-func UserModelValidate(user model.User)  (model.User, error){
+func UserModelValidate(user *model.User)  (*model.User, error){
 	// checking required fields 
 	if user.FirstName == "" {
 		return user, errors.New("first name field cannot be empty")
@@ -29,8 +29,15 @@ func UserModelValidate(user model.User)  (model.User, error){
 	if user.Address == "" {
 		return user, errors.New("address field cannot be empty")
 	}
+	// if user.Intitution.Name == "" {
+	// 	return user, errors.New("institution name field cannot be empty")
+	// }
+	// if user.Intitution.Type == "" {
+	// 	return user, errors.New("institution type field cannot be empty")
+	// }
 	// assigning default values
 	user.Status = "pending"
-	user.
+	user.EmailVerified = false
+	user.Avatar="/profile/nopic.jpg"
 	return user, nil
 }
