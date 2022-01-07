@@ -28,9 +28,9 @@ type User struct {
 	TotalUploads string 	`json:"totalUploads" bson:"totalUploads"`
 	Specialisation []string	`json:"specialization" bson:"ownership"`
 	Interest []string		`json:"intrest" bson:"intrest"`
-	LastLoggedIn time.Time
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	LastLoggedIn time.Time	`json:"lastLogin" bson:"lastLogin"`
+	CreatedAt time.Time		`json:"createdAt" bson:"createdAt"`
+	UpdatedAt time.Time		`json:"updatedAt" bson:"updatedAt"`
 	Status string			`json:"status" bson:"status"`
 
 }
@@ -40,8 +40,8 @@ type Bank struct{
 	AcccountNumber string 		`json:"accountNumber" bson:"accountNumber"`
 	DefaultAccount bool 		`json:"defaultAccount" bson:"defaultAccount"`
 	AccountStatus string 		`json:"accountStatus" bson:"accountStatus"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	CreatedAt time.Time			`json:"createdAt" bson:"createdAt"`
+	UpdatedAt time.Time			`json:"updatedAt" bson:"updatedAt"`
 }
 type Institution struct{
 	Name string					`json:"Name" bson:"Name"`

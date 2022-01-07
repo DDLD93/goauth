@@ -2,6 +2,7 @@ package utilities
 
 import (
 	"errors"
+	// "strings"
 
 	"github.com/ddld93/goauth/model"
 )
@@ -40,7 +41,13 @@ func UserModelValidate(user *model.User)  (*model.User, error){
 	}
 	// assigning default values
 	user.Status = "pending"
+	user.FullName = user.LastName + " " + user.FirstName
 	user.EmailVerified = false
 	user.Avatar="/profile/nopic.jpg"
+	// user.NarrEmail = strings.Replace()
 	return user, nil
+}
+
+func LoginCheck()  {
+	
 }

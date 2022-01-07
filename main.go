@@ -10,7 +10,7 @@ import (
 	routes "github.com/ddld93/goauth/routes"
 )
 func main()  {
-	userCtrl := controller.NewUserCtrl("localhost", 4333)
+	userCtrl := controller.NewUserCtrl("localhost", 4321)
 	route := routes.UserRoute{UserCtrl: userCtrl}
     newUser:= model.User{
 		FirstName: "umar",
@@ -22,7 +22,6 @@ func main()  {
 		DOB: "11/05/1993",
 		Intitution: model.Institution{
 			Name: "ABU Zaria",
-			Type: "University",
 		},
 		
 	}
