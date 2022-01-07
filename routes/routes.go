@@ -2,6 +2,7 @@ package routes
 
 import (
 	"errors"
+	"time"
 
 	controller "github.com/ddld93/goauth/controllers"
 	"github.com/ddld93/goauth/model"
@@ -11,7 +12,7 @@ import (
 type UserRoute struct {
 	UserCtrl *controller.DB_Connect
 }
-var tokenMaker,_ = utilities.NewPasetoMaker("yhjkiuytgrtyujikjtedewertyhujkiu") // secrete must be 32 bit char
+
 
 func (ur *UserRoute) Login(email, password string) (string,error){
 	user, err :=	ur.UserCtrl.GetUser(email)
@@ -23,7 +24,7 @@ func (ur *UserRoute) Login(email, password string) (string,error){
 	if !resp {
 		return "", errors.New("invalid password")
 	}
-	token,err:= tokenMaker.CreateToken(user.Email,user.UserRole,100)
+	token,err:=  utilities.TokenMaker.CreateToken(user.Email,user.UserRole,time.Hour)
 	if err != nil {
 		return "", err
 	}
@@ -50,7 +51,7 @@ func (ur *UserRoute) Register(user *model.User ,userRole string) (string,error){
 }
 
 func (ur *UserRoute) Activate(token,email,status string) (string,error){
-	claims,err := tokenMaker.VerifyToken(token)
+	claims,err := utilities.TokenMaker.VerifyToken(token)
 	if err != nil {
 		return "", err
 	}
@@ -85,8 +86,8 @@ func (ur *UserRoute) Activate(token,email,status string) (string,error){
 //  return nil
 
 // }
-func (ur *UserRoute) ChangePassword(token string) error{
-	claims,err := tokenMaker.VerifyToken(token)
+func (ur *UserRoute) ChangePassword(token string, newPassword string) error{
+	claims,err := utilities.TokenMaker.VerifyToken(token)
 	if err != nil {
 		return  err
 	}
@@ -100,7 +101,7 @@ func (ur *UserRoute) ChangePassword(token string) error{
 	if err != nil {
 		return  err
 	}
-	hash, err := utilities.HashPassword(user.Password)
+	hash, err := utilities.HashPassword(newPassword)
 	if err != nil {
 		return  err
 	}

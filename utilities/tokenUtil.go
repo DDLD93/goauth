@@ -27,12 +27,12 @@ var  (
 	ErrExpiredToken = errors.New("token is expired")
 	ErrInvalidToken = errors.New("token is invalid"))
 
-func NewPayload(username string, accountType string,  duration time.Duration) (*Payload, error) {
+func NewPayload(username string, accountType string) (*Payload, error) {
     payload := &Payload{
         Username:  username,
 		AccoutType: accountType,
         IssuedAt:  time.Now(),
-        ExpiredAt: time.Now().Add(duration),
+        ExpiredAt: time.Now().Add(time.Minute * 60),
     }
     return payload, nil
 }
@@ -55,7 +55,7 @@ func NewPasetoMaker(symmetricKey string) (Maker, error) {
     return maker, nil
 }
 func (maker *PasetoMaker) CreateToken(username string, accountType string, duration time.Duration) (string, error) {
-    payload, err := NewPayload(username, accountType, duration)
+    payload, err := NewPayload(username, accountType)
     if err != nil {
         return "", err
     }
@@ -77,3 +77,4 @@ func (maker *PasetoMaker) VerifyToken(token string) (*Payload, error) {
 
     return payload, nil
 }
+var TokenMaker,_= NewPasetoMaker("yhjkiuytgrtyujikjtedewertyhujkiu") // secrete must be 32 bit char
