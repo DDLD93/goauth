@@ -33,17 +33,17 @@ func (ur *UserRoute) Login(email, password string) (string,error){
 
 func (ur *UserRoute) Register(user *model.User ,userRole string) (string,error){
 	user.UserRole = userRole
-	userValidated,err1:= utilities.UserModelValidate(user)
+	validatedUserModel,err1:= utilities.UserModelValidate(user)
 	if err1 != nil {
 		return "", err1
 	}
 	// hashing password using Bcrypt
-	hash, err2 := utilities.HashPassword(userValidated.Password)
+	passwordHash, err2 := utilities.HashPassword(validatedUserModel.Password)
 	if err2 != nil {
 		return "", errors.New(" error harshing password")
 	}
-	userValidated.Password = hash
-	resp,err3 := ur.UserCtrl.CreateUser(userValidated)
+	validatedUserModel.Password = passwordHash
+	resp,err3 := ur.UserCtrl.CreateUser(validatedUserModel)
 	if err3 != nil {
 		return "", err3
 	}

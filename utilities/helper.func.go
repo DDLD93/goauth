@@ -32,12 +32,12 @@ func UserModelValidate(user *model.User)  (*model.User, error){
 	if user.UserRole == "" {
 		return user, errors.New("user role must be provided")
 	}
-	// if user.Intitution.Name == "" {
-	// 	return user, errors.New("institution name field cannot be empty")
-	// }
-	// if user.Intitution.Type == "" {
-	// 	return user, errors.New("institution type field cannot be empty")
-	// }
+	if user.Intitution.Name == "" {
+		return user, errors.New("institution name field cannot be empty")
+	}
+	if user.Intitution.Type == "" {
+		return user, errors.New("institution type field cannot be empty")
+	}
 	// assigning default values
 	user.Status = "pending"
 	user.EmailVerified = false
