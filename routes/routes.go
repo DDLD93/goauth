@@ -11,7 +11,7 @@ import (
 type UserRoute struct {
 	UserCtrl *controller.DB_Connect
 }
-var tokenMaker,_ = utilities.NewPasetoMaker("yhjkiuytgrtyujikjtedewertyhujkiu")
+var tokenMaker,_ = utilities.NewPasetoMaker("yhjkiuytgrtyujikjtedewertyhujkiu") // secrete must be 32 bit char
 
 func (ur *UserRoute) Login(email, password string) (string,error){
 	user, err :=	ur.UserCtrl.GetUser(email)
@@ -30,7 +30,8 @@ func (ur *UserRoute) Login(email, password string) (string,error){
 	return token,nil
 }
 
-func (ur *UserRoute) Register(user *model.User) (string,error){
+func (ur *UserRoute) Register(user *model.User ,userRole string) (string,error){
+	user.UserRole = userRole
 	userValidated,err1:= utilities.UserModelValidate(user)
 	if err1 != nil {
 		return "", err1

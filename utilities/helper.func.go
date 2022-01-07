@@ -29,6 +29,9 @@ func UserModelValidate(user *model.User)  (*model.User, error){
 	if user.Address == "" {
 		return user, errors.New("address field cannot be empty")
 	}
+	if user.UserRole == "" {
+		return user, errors.New("user role must be provided")
+	}
 	// if user.Intitution.Name == "" {
 	// 	return user, errors.New("institution name field cannot be empty")
 	// }
